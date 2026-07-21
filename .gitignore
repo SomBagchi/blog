@@ -8,3 +8,5 @@ decisions.md
 # Research workspaces: per-post scratch, notes, source dumps, and Claude
 # working areas. Everything under workspace/ stays off the public repo.
 /workspace/
+
+**/*.quarto_ipynb
