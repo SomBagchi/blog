@@ -1,0 +1,13 @@
+---
+title: "Essays"
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+  categories: true
+  sort-ui: false
+  filter-ui: false
+  fields: [date, title, subtitle, categories, reading-time]
+page-layout: full
+toc: false
+---

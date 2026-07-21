@@ -1,0 +1,38 @@
+project:
+  type: website
+  render:
+    - index.qmd
+    - about.qmd
+    - "posts/**/*.qmd"
+  resources:
+    - CNAME
+
+website:
+  title: "Som Bagchi"
+  site-url: https://sombagchi.com
+  description: "Essays on AI: performance engineering, training at scale, and how it all diffuses through the world."
+  favicon: assets/favicon.svg
+  page-navigation: false
+  navbar:
+    left:
+      - href: index.qmd
+        text: Essays
+      - href: about.qmd
+        text: About
+    # TODO(Som): once the X rename is done and the GitHub repo exists, add icons:
+    # right:
+    #   - icon: twitter-x
+    #     href: https://x.com/YOURHANDLE
+    #   - icon: github
+    #     href: https://github.com/YOURUSERNAME
+
+format:
+  html:
+    theme: [default, assets/scaling.scss]
+    highlight-style: github
+    html-math-method: katex
+    toc: true
+    toc-depth: 3
+    code-copy: hover
+    smooth-scroll: true
+    include-in-header: assets/goatcounter.html

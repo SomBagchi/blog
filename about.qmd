@@ -1,0 +1,24 @@
+---
+title: "About"
+about:
+  template: solana
+toc: false
+---
+
+<!-- TODO(Som): replace everything below with your real bio. Suggested shape:
+     1. Who you are, in one plain sentence.
+     2. What you're working toward (the frontier-AI-lab trajectory) and what you're
+        currently teaching yourself — GPU/TPU performance engineering, optimisers for
+        large-batch training, RL vs pretraining, large-scale training infrastructure.
+     3. What this site is: essays, roughly 80% technical / 20% on AI's economics and
+        diffusion, published to keep the thinking honest.
+     4. How to reach you (email and/or X), once you've decided what to publish. -->
+
+I'm Som. I'm teaching myself how frontier AI systems are actually built — GPU and TPU
+performance engineering, optimisers for large-batch training, reinforcement learning,
+and the infrastructure that holds it all together — and writing about it here as I go.
+
+Alongside the technical work, I think about how AI moves through the economy: diffusion,
+growth theory, and whether we're at the start of something explosive.
+
+This site is where the thinking gets dragged into the open.

@@ -1,0 +1,495 @@
+/*
+ * scaling.scss — Quarto theme adapted from "How to Scale Your Model"
+ * (the JAX ML scaling book): https://jax-ml.github.io/scaling-book/
+ *
+ * Source styles: https://github.com/jax-ml/scaling-book (MIT license), a
+ * Jekyll site built on the al-folio theme with the Distill (distill.pub
+ * template v2) article layout. Tokens were extracted from the site's compiled
+ * assets/css/main.css, _sass/_variables.scss, _sass/_themes.scss (light
+ * theme), _sass/_distill.scss, and the typography embedded in the Distill
+ * template.v2.js bundle.
+ *
+ * Adapted for Quarto. Use in _quarto.yml as:
+ *   theme: [default, assets/scaling.scss]
+ * Pairs well with `highlight-style: github` (the upstream light code theme).
+ */
+
+/*-- scss:defaults --*/
+
+// al-folio self-hosts Roboto (weights 300-700); the Quarto adaptation loads
+// the same family from Google Fonts instead.
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,700&display=swap');
+
+// ---------------------------------------------------------------------------
+// Palette — al-folio _variables.scss + _themes.scss (light theme)
+// ---------------------------------------------------------------------------
+$scaling-accent:        #b509ac;                 // $purple-color / --global-theme-color
+$scaling-text:          #000000;                 // --global-text-color
+$scaling-bg:            #ffffff;                 // --global-bg-color
+$scaling-muted:         #828282;                 // $grey-color / --global-text-color-light
+$scaling-divider:       rgba(0, 0, 0, 0.1);      // --global-divider-color
+$scaling-underline:     rgba(0, 0, 0, 0.4);      // --global-underline-color (Distill link rule)
+$scaling-code-bg:       rgba(181, 9, 172, 0.05); // --global-code-bg-color = rgba($purple-color, .05)
+$scaling-caption-color: rgba(0, 0, 0, 0.6);      // Distill figcaption / quiet text
+$scaling-quote-color:   rgba(0, 0, 0, 0.6);      // Distill blockquote text
+
+// ---------------------------------------------------------------------------
+// Typography — Distill template v2: html { font-size: 14px } and
+// d-article { font-size: 1.06rem; line-height: 1.7em } at desktop widths.
+// ---------------------------------------------------------------------------
+$font-size-root:        14px;
+$font-size-base:        1.06rem;
+$line-height-base:      1.7;
+
+// Roboto first (al-folio/MDB body font), then the Distill system fallback.
+$font-family-base:      "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI",
+                        Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans",
+                        "Helvetica Neue", Arial, sans-serif;
+$headings-font-family:  $font-family-base;
+$headings-font-weight:  700;
+$headings-line-height:  1.25;
+// Upstream has no custom code font (system monospace; Iosevka only for typograms).
+$font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+                        "Liberation Mono", "Courier New", monospace;
+
+// Distill heading scale, converted at the 14px root:
+// d-title h1 = 40px (title, see rules), d-article h2 = 24px, h3 = 18px.
+$h1-font-size:          2.286rem;  // 32px — in-body h1; the page title is 40px
+$h2-font-size:          1.714rem;  // 24px
+$h3-font-size:          1.286rem;  // 18px
+$h4-font-size:          1.143rem;  // 16px
+$h5-font-size:          1.06rem;
+$h6-font-size:          1rem;
+
+// ---------------------------------------------------------------------------
+// Color assignments
+// ---------------------------------------------------------------------------
+$body-bg:               $scaling-bg;
+$body-color:            $scaling-text;
+$link-color:            $scaling-accent;
+$link-decoration:       none;
+
+// Inline code and code blocks: accent text on a 5% accent tint (al-folio).
+$code-color:            $scaling-accent;
+$code-bg:               $scaling-code-bg;
+$code-block-bg:         $scaling-code-bg;
+$code-block-border-left: false;                  // upstream blocks have no left border
+
+$table-border-color:    $scaling-divider;
+
+// Navbar: white, black text, accent on hover, hairline bottom border (rules).
+$navbar-bg:             $scaling-bg;
+$navbar-fg:             $scaling-text;
+$navbar-hl:             $scaling-accent;
+
+$footer-bg:             $scaling-bg;
+$footer-fg:             $scaling-muted;
+
+// TOC — al-folio d-contents: quiet ~250px sidebar, understated links.
+$toc-color:             $scaling-muted;
+$toc-font-size:         0.9rem;
+$toc-active-border:     $scaling-accent;
+$toc-inactive-border:   $scaling-divider;
+
+// ---------------------------------------------------------------------------
+// Layout — the narrow Distill reading column. Distill's text column is
+// 8 x 60px + 7 x 32px gaps = 704px at >=1180px; the al-folio page container
+// is capped at 930px (_config.yml max_width). 800px body + 250px gutters
+// reproduces the feel in Quarto's grid.
+// ---------------------------------------------------------------------------
+$grid-body-width:       800px;
+$grid-sidebar-width:    250px;
+$grid-margin-width:     250px;
+$grid-column-gutter-width: 1.5rem;
+
+/*-- scss:rules --*/
+
+/* ------------------------------------------------------------------------ */
+/* Base                                                                     */
+/* ------------------------------------------------------------------------ */
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Distill-style links in running text: accent color, no text-decoration,
+   a faint grey rule beneath that sharpens to the accent on hover. */
+main.content :is(p, li, td, th, figcaption, blockquote) a:not(.footnote-ref):not(.anchorjs-link) {
+  color: $scaling-accent;
+  text-decoration: none;
+  border-bottom: 1px solid $scaling-underline;
+  transition: border-bottom-color 0.15s ease-in;
+
+  &:hover,
+  &:focus {
+    color: $scaling-accent;
+    border-bottom-color: $scaling-accent;
+  }
+}
+
+main.content a.footnote-ref,
+main.content a.anchorjs-link {
+  color: $scaling-accent;
+  text-decoration: none;
+  border-bottom: none;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Headings                                                                 */
+/* ------------------------------------------------------------------------ */
+
+main.content {
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: $scaling-text;
+  }
+
+  /* Distill signature: section headings carry a hairline underneath. */
+  h2 {
+    margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid $scaling-divider;
+  }
+
+  h3 {
+    margin-top: 2rem;
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Title block — Distill d-title + d-byline                                 */
+/* ------------------------------------------------------------------------ */
+
+.quarto-title-block {
+  margin-bottom: 2.5rem;
+
+  .quarto-title h1.title {
+    font-size: 2.857rem;      /* d-title h1: 40px at the 14px root */
+    font-weight: 700;
+    line-height: 1.1em;
+    margin-bottom: 0.75rem;
+  }
+
+  .quarto-title p.subtitle,
+  .quarto-title .subtitle.lead {
+    font-size: 1.2rem;        /* d-title p */
+    font-weight: 300;
+    line-height: 1.55em;
+    color: $scaling-text;
+  }
+
+  .quarto-categories .quarto-category {
+    color: $scaling-muted;
+    border-color: $scaling-divider;
+    font-size: 0.75rem;
+  }
+}
+
+/* Byline strip: small, quiet, uppercase labels between hairline rules. */
+.quarto-title-meta {
+  border-top: 1px solid $scaling-divider;
+  border-bottom: 1px solid $scaling-divider;
+  padding: 1.1rem 0;
+  margin-bottom: 2rem;
+  font-size: 0.86rem;
+  line-height: 1.8em;
+
+  .quarto-title-meta-heading {
+    font-size: 0.71rem;       /* d-byline h3 labels (approximated) */
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $scaling-muted;
+  }
+
+  .quarto-title-meta-contents {
+    color: $scaling-text;
+
+    p { margin-bottom: 0.2rem; }
+
+    a {
+      color: $scaling-text;
+      text-decoration: none;
+      border-bottom: 1px solid $scaling-underline;
+
+      &:hover {
+        color: $scaling-accent;
+        border-bottom-color: $scaling-accent;
+      }
+    }
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Navbar — al-folio: white, no shadow, hairline bottom border              */
+/* ------------------------------------------------------------------------ */
+
+.navbar {
+  background-color: $scaling-bg;
+  box-shadow: none;
+  border-bottom: 1px solid $scaling-divider;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+
+  .navbar-brand {
+    color: $scaling-text;
+    font-size: 1.07rem;
+    font-weight: 400;
+
+    &:hover,
+    &:focus {
+      color: $scaling-accent;
+    }
+  }
+
+  .navbar-nav .nav-link {
+    color: $scaling-text;
+    font-size: 0.95rem;
+
+    &:hover,
+    &:focus,
+    &.active {
+      color: $scaling-accent;
+    }
+  }
+
+  .navbar-toggler {
+    border: none;
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* TOC — al-folio d-contents: quiet links, hover darkens                    */
+/* ------------------------------------------------------------------------ */
+
+nav[role="doc-toc"] {
+  > h2#toc-title {
+    font-size: 0.86rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: $scaling-text;
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0.6rem;
+  }
+
+  > ul li a {
+    color: $scaling-muted;
+    text-decoration: none;
+
+    &:hover {
+      color: $scaling-text;
+    }
+
+    &.active {
+      color: $scaling-text;
+      font-weight: 500;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Blog listing — title prominent, metadata muted                           */
+/* ------------------------------------------------------------------------ */
+
+.quarto-listing a {
+  text-decoration: none;
+}
+
+div.quarto-post {
+  border-bottom: 1px solid $scaling-divider;
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+
+  .body .listing-title,
+  .body h3.listing-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+
+    a {
+      color: $scaling-text;
+      text-decoration: none;
+
+      &:hover {
+        color: $scaling-accent;
+      }
+    }
+  }
+
+  .body .listing-subtitle,
+  .body .listing-description {
+    color: $scaling-text;
+    font-size: 1rem;
+  }
+
+  .metadata {
+    color: $scaling-muted;
+    font-size: 0.86rem;
+
+    .listing-date,
+    .listing-author {
+      color: $scaling-muted;
+    }
+  }
+
+  .listing-categories .listing-category {
+    color: $scaling-muted;
+    border-color: $scaling-divider;
+  }
+}
+
+/* post-meta equivalent on default/table listings */
+.quarto-listing-default .listing-date,
+.quarto-listing-table .listing-date {
+  color: $scaling-muted;
+  font-size: 0.875rem;        /* al-folio .post-meta */
+}
+
+/* ------------------------------------------------------------------------ */
+/* Code — accent-tinted chips and blocks (al-folio)                         */
+/* ------------------------------------------------------------------------ */
+
+/* Inline code: purple on a 5% purple tint, 3px radius (al-folio: 3px 3px). */
+main.content code:not(.sourceCode) {
+  color: $scaling-accent;
+  background-color: $scaling-code-bg;
+  border-radius: 3px;
+  padding: 2px 4px;
+}
+
+/* Code blocks: same tint, 6px radius, no left border (al-folio pre). */
+div.sourceCode {
+  background-color: $scaling-code-bg;
+  border: none;
+  border-radius: 6px;
+  margin: 1.2rem 0;
+}
+
+div.sourceCode pre.sourceCode {
+  padding: 8px 12px;          /* al-folio: 6px 12px */
+  color: $scaling-text;
+}
+
+pre code {
+  color: inherit;
+  background: none;
+  padding: 0;
+}
+
+/* Computation output stays plain, per the Distill look. */
+.cell-output pre {
+  background-color: transparent;
+  color: $scaling-text;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Blockquote — scaling-book override: thin accent rule, italic grey text   */
+/* ------------------------------------------------------------------------ */
+
+main.content blockquote,
+main.content .blockquote {
+  border-left: 2px solid $scaling-accent;
+  padding: 0 0 0 2em;
+  margin: 1.5em 0;
+  font-style: italic;
+  color: $scaling-quote-color;
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Rules, figures, tables                                                   */
+/* ------------------------------------------------------------------------ */
+
+main.content hr {
+  border: 0;
+  border-top: 1px solid $scaling-divider;
+  opacity: 1;
+  margin: 2.5rem 0;
+}
+
+main.content figure {
+  margin: 1.5rem 0 2rem;
+}
+
+main.content figcaption,
+main.content .figure-caption {
+  color: $scaling-caption-color;
+  font-size: 0.9rem;          /* Distill figcaption 12px; upstream captions run larger */
+  line-height: 1.5em;
+  margin-top: 0.75rem;        /* al-folio .caption */
+  text-align: left;
+}
+
+main.content table {
+  font-size: 1rem;            /* al-folio: table td/th font-size 1rem */
+  border-top: none;
+  border-bottom: 1px solid $scaling-divider;
+
+  th,
+  td {
+    padding: 0.3rem 1rem 0.3rem 0;  /* al-folio: 1px 1rem 1px 0, opened up slightly */
+    border-color: $scaling-divider;
+    background-color: transparent;
+  }
+
+  thead th {
+    font-weight: 700;
+    border-top: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  }
+
+  tbody {
+    border-top: none;
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Appendix and footnotes — Distill d-appendix: small, quiet, hairline top  */
+/* ------------------------------------------------------------------------ */
+
+#quarto-appendix.default {
+  background-color: $scaling-bg;
+  border-top: 1px solid $scaling-divider;
+  font-size: 0.86rem;
+  color: $scaling-caption-color;
+
+  .quarto-appendix-heading {
+    font-size: 0.86rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+}
+
+section.footnotes {
+  font-size: 0.9rem;
+  color: $scaling-caption-color;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Footer — minimal, muted (upstream fixed footer is dark; kept light here) */
+/* ------------------------------------------------------------------------ */
+
+.nav-footer {
+  border-top: 1px solid $scaling-divider;
+  font-size: 0.86rem;
+  color: $scaling-muted;
+
+  a {
+    color: $scaling-muted;
+
+    &:hover {
+      color: $scaling-accent;
+    }
+  }
+}
