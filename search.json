@@ -1,65 +1,16 @@
 [
   {
-    "objectID": "posts/2026-07-21-hello-world/index.html",
-    "href": "posts/2026-07-21-hello-world/index.html",
-    "title": "Hello, world: a shakedown of the machinery",
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
     "section": "",
-    "text": "This site will carry essays on how frontier AI systems get built — performance engineering on GPUs and TPUs, optimisers for large-batch training, RL and pretraining, the infrastructure underneath — plus occasional pieces on AI’s economics. Before any of that, this post exists to exercise every part of the machinery once.1 Delete it, or keep it as a colophon."
-  },
-  {
-    "objectID": "posts/2026-07-21-hello-world/index.html#equations",
-    "href": "posts/2026-07-21-hello-world/index.html#equations",
-    "title": "Hello, world: a shakedown of the machinery",
-    "section": "Equations",
-    "text": "Equations\nInline math should sit comfortably in a sentence: the arithmetic intensity of a kernel is I = \\mathrm{FLOPs} / \\mathrm{bytes}, and a kernel is compute-bound when I exceeds the accelerator’s ridge point. Display math should breathe. For a matrix multiply A B with A \\in \\mathbb{R}^{m \\times k}, B \\in \\mathbb{R}^{k \\times n} in half precision (2 bytes per element):\n\nI(m, n, k) \\;=\\; \\frac{2\\,mnk}{2\\,(mk + kn + mn)} \\;=\\; \\frac{mnk}{mk + kn + mn}.\n\nFor square matrices this grows like n/3 — which is why big matmuls are the easiest thing in the world to keep compute-bound, and small ones the hardest."
-  },
-  {
-    "objectID": "posts/2026-07-21-hello-world/index.html#code",
-    "href": "posts/2026-07-21-hello-world/index.html#code",
-    "title": "Hello, world: a shakedown of the machinery",
-    "section": "Code",
-    "text": "Code\nSyntax highlighting, in the scaling book’s quiet GitHub style:\ndef arithmetic_intensity(m: int, n: int, k: int, bytes_per_el: int = 2) -&gt; float:\n    \"\"\"FLOPs per byte moved for a naive (no-reuse-in-cache) m*k @ k*n matmul.\"\"\"\n    flops = 2 * m * n * k\n    bytes_moved = bytes_per_el * (m * k + k * n + m * n)\n    return flops / bytes_moved\n\n# A 4096^3 matmul in fp16 vs. an H100's ~295 FLOP/byte ridge point:\nprint(f\"{arithmetic_intensity(4096, 4096, 4096):.0f} FLOPs/byte\")  # ~1365 -&gt; compute-bound"
-  },
-  {
-    "objectID": "posts/2026-07-21-hello-world/index.html#a-figure",
-    "href": "posts/2026-07-21-hello-world/index.html#a-figure",
-    "title": "Hello, world: a shakedown of the machinery",
-    "section": "A figure",
-    "text": "A figure\nImages and captions:\n\n\n\nA 4×4 systolic array, schematically: weights stream down, activations stream right, and each cell does a multiply-accumulate per cycle. The real ones are a little bigger."
-  },
-  {
-    "objectID": "posts/2026-07-21-hello-world/index.html#an-interactive-model",
-    "href": "posts/2026-07-21-hello-world/index.html#an-interactive-model",
-    "title": "Hello, world: a shakedown of the machinery",
-    "section": "An interactive model",
-    "text": "An interactive model\nThe reason this site isn’t on Substack. A Solow-style growth model: capital per worker accumulates as\n\nk_{t+1} = s\\,k_t^{\\alpha} + (1 - \\delta)\\,k_t,\n\\qquad\nk^{*} = \\left(\\frac{s}{\\delta}\\right)^{\\frac{1}{1-\\alpha}},\n\nwith output k^\\alpha, savings rate s, depreciation \\delta, and \\alpha = 1/3. Drag the sliders; the trajectory and the steady state k^{*} respond instantly.\n\nviewof s = Inputs.range([0.05, 0.6], {value: 0.3, step: 0.01, label: \"Savings rate s\"})\n\n\n\n\n\n\n\nviewof delta = Inputs.range([0.02, 0.15], {value: 0.05, step: 0.005, label: \"Depreciation δ\"})\n\n\n\n\n\n\n\nsolow = {\n  const alpha = 1 / 3;\n  const T = 120;\n  let k = 1;\n  const path = [{t: 0, k: k}];\n  for (let t = 1; t &lt;= T; t++) {\n    k = s * Math.pow(k, alpha) + (1 - delta) * k;\n    path.push({t: t, k: k});\n  }\n  return path;\n}\n\n\n\n\n\n\n\nkstar = Math.pow(s / delta, 1.5)\n\n\n\n\n\n\n\nPlot.plot({\n  width: 660,\n  height: 380,\n  marginLeft: 50,\n  style: {fontSize: \"12px\"},\n  x: {label: \"t (periods)\"},\n  y: {label: \"capital per worker, k\", grid: true},\n  marks: [\n    Plot.ruleY([kstar], {stroke: \"#b509ac\", strokeDasharray: \"4 4\"}),\n    Plot.text([{t: 118, k: kstar}], {\n      x: \"t\", y: \"k\",\n      text: [`k* = ${kstar.toFixed(2)}`],\n      dy: -10, fill: \"#b509ac\", textAnchor: \"end\", fontWeight: 600\n    }),\n    Plot.lineY(solow, {x: \"t\", y: \"k\", stroke: \"#000000\", strokeWidth: 1.5})\n  ]\n})\n\n\n\n\n\n\nLater, the same machinery carries anything: a roofline explorer, an attention visualiser, a takeoff model with more dials than anyone needs."
-  },
-  {
-    "objectID": "posts/2026-07-21-hello-world/index.html#what-this-post-just-verified",
-    "href": "posts/2026-07-21-hello-world/index.html#what-this-post-just-verified",
-    "title": "Hello, world: a shakedown of the machinery",
-    "section": "What this post just verified",
-    "text": "What this post just verified\nInline and display KaTeX; syntax-highlighted code with copy-on-hover; figures with captions; footnotes; category tags on the listing page; and client-side interactive cells with zero server behind them. If you can read this on sombagchi.com with a padlock in the address bar, the pipeline works end to end."
-  },
-  {
-    "objectID": "posts/2026-07-21-hello-world/index.html#footnotes",
-    "href": "posts/2026-07-21-hello-world/index.html#footnotes",
-    "title": "Hello, world: a shakedown of the machinery",
-    "section": "Footnotes",
-    "text": "Footnotes\n\n\nFootnotes need testing too.↩︎"
+    "text": "I’m Som."
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Essays",
     "section": "",
-    "text": "Hello, world: a shakedown of the machinery\n\n\nEquations, code, a figure, and an interactive growth model — making sure everything on this site works before the real essays start.\n\n\n\nTechnical\n\n\n\n\n\n\nJul 21, 2026\n\n3 min\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "I’m Som."
+    "text": "No matching items"
   }
 ]
