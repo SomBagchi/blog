@@ -1,16 +1,30 @@
 [
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "posts/2026-09-01-mensis-mirabilis/index.html",
+    "href": "posts/2026-09-01-mensis-mirabilis/index.html",
+    "title": "Mensis Mirabilis",
     "section": "",
-    "text": "I’m Som."
+    "text": "It seems as if we are on the eve of the singularity and something deep about the world would need to break for us to not have superhuman intelligence within the next five years. This blog is my way of trying to organise my thoughts and contribute to the discourse at this moment in history. I plan to focus on the shape of AI research and development, the diffusion of AI through society and the economy, safety and control of frontier AI systems and how AI changes what it means to be human.\nI’m not entirely sure what to think about most of the questions I will address and I make no claim that these opinions are final. Intellectual inquiry is not merely some sequence of Bayesian updates. It is extremely difficult to even specify our hypothesis space, figure out whether we are asking the right questions or know what an answer is. Trying to do so will require me to take ideas seriously, sometimes too seriously, and lead me to positions I do not hold.\nIt’s a shame to have a post that introduces a blog without a single idea. So, here is one. Throughout history, brilliant minds have been unusually productive over short time spans. Isaac Newton developed calculus, optics and gravitation over the course of eighteen months. Einstein explained special relativity, Brownian motion and the photoelectric effect over four. Historians call this an annus mirabilis or miracle year. Engineers from Anthropic claim that Mythos Preview led to a 4x uplift in their work. That means today, a miracle month — a mensis mirabilis — is now possible.1"
+  },
+  {
+    "objectID": "posts/2026-09-01-mensis-mirabilis/index.html#footnotes",
+    "href": "posts/2026-09-01-mensis-mirabilis/index.html#footnotes",
+    "title": "Mensis Mirabilis",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nOf course, the mensis mirabilis will primarily occur for fields where models are already good (such as AI development and code generation). It doesn’t seem so far-fetched that (say) a blog writer could have a mensis mirabilis or something similar to that.↩︎"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Essays",
     "section": "",
-    "text": "No matching items"
+    "text": "Mensis Mirabilis\n\n\n\n\n\n\nNon-technical\n\n\n\n\n\n\nSep 1, 2026\n\n2 min\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "I’m Som."
   }
 ]
