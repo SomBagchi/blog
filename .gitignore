@@ -11,3 +11,6 @@ ideas.md
 /workspace/
 
 **/*.quarto_ipynb
+
+# Substack mirror folders (paste-ready ports of published essays) — private
+/substack/
